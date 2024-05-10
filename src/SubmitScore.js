@@ -1,41 +1,71 @@
+import { db } from "./firebase";
+import { addDoc, collection, doc } from "firebase/firestore";
+
 function SubmitScore() {
+    async function handleSubmit(e) {
+        e.preventDefault();
+        const country = e.target.country.value;
+        const score = e.target.score.value;
+        const user = "Lynnie";
+        const data = {
+            user: user,
+            country: country,
+            score: score,
+        };
+
+        if (country !== "no-country") {
+            try {
+                const docRef = await addDoc(collection(db, "scores"), data);
+                console.log("Document written with ID: ", docRef.id);
+            } catch (e) {
+                console.error("Error adding document: ", e);
+            }
+        }
+    }
     return (
-        <form class="d-flex flex-row justify-content-center align-items-center">
-            <div class="p-2">
-                <select class="form-select" id="Country" required>
-                    <option selected disabled>
-                        Country...
-                    </option>
-                    <option>🇸🇪 Sweden </option>
-                    <option>🇺🇦 Ukraine </option>
-                    <option>🇩🇪 Germany </option>
-                    <option>🇱🇺 Luxembourg </option>
-                    <option>🇳🇱 Netherlands </option>
-                    <option>🇮🇱 Israel </option>
-                    <option>🇱🇹 Lithuania </option>
-                    <option>🇪🇸 Spain </option>
-                    <option>🇪🇪 Estonia </option>
-                    <option>🇮🇪 Ireland </option>
-                    <option>🇱🇻 Latvia </option>
-                    <option>🇬🇷 Greece </option>
-                    <option>🇬🇧 United Kingdom </option>
-                    <option>🇳🇴 Norway </option>
-                    <option>🇮🇹 Italy </option>
-                    <option>🇷🇸 Serbia </option>
-                    <option>🇫🇮 Finland </option>
-                    <option>🇵🇹 Portugal </option>
-                    <option>🇦🇲 Armenia </option>
-                    <option>🇨🇾 Cyprus </option>
-                    <option>🇨🇭 Switzerland </option>
-                    <option>🇸🇮 Slovenia </option>
-                    <option>🇭🇷 Croatia </option>
-                    <option>🇬🇪 Georgia </option>
-                    <option>🇫🇷 France </option>
-                    <option>🇦🇹 Austria </option>
+        <form
+            method="post"
+            onSubmit={handleSubmit}
+            className="d-flex flex-row justify-content-center align-items-center"
+        >
+            <div className="p-2">
+                <select
+                    className="form-select"
+                    id="country"
+                    name="country"
+                    required
+                >
+                    <option value="no-country">Country...</option>
+                    <option value="Sweden">🇸🇪 Sweden</option>
+                    <option value="Ukraine">🇺🇦 Ukraine</option>
+                    <option value="Germany">🇩🇪 Germany</option>
+                    <option value="Luxembourg">🇱🇺 Luxembourg</option>
+                    <option value="Netherlands">🇳🇱 Netherlands</option>
+                    <option value="Israel">🇮🇱 Israel</option>
+                    <option value="Lithuania">🇱🇹 Lithuania</option>
+                    <option value="Spain">🇪🇸 Spain</option>
+                    <option value="Estonia">🇪🇪 Estonia</option>
+                    <option value="Ireland">🇮🇪 Ireland</option>
+                    <option value="Latvia">🇱🇻 Latvia</option>
+                    <option value="Greece">🇬🇷 Greece</option>
+                    <option value="United Kingdom">🇬🇧 United Kingdom</option>
+                    <option value="Norway">🇳🇴 Norway</option>
+                    <option value="Italy">🇮🇹 Italy</option>
+                    <option value="Serbia">🇷🇸 Serbia</option>
+                    <option value="Finland">🇫🇮 Finland</option>
+                    <option value="Portugal">🇵🇹 Portugal</option>
+                    <option value="Armenia">🇦🇲 Armenia</option>
+                    <option value="Cyprus">🇨🇾 Cyprus</option>
+                    <option value="Switzerland">🇨🇭 Switzerland</option>
+                    <option value="Slovenia">🇸🇮 Slovenia</option>
+                    <option value="Croatia">🇭🇷 Croatia</option>
+                    <option value="Georgia">🇬🇪 Georgia</option>
+                    <option value="France">🇫🇷 France</option>
+                    <option value="Austria">🇦🇹 Austria</option>
                 </select>
             </div>
 
-            <div class="p-2">
+            <div className="p-2">
                 <input
                     placeholder="Score (1-10)"
                     type="number"
@@ -47,8 +77,8 @@ function SubmitScore() {
                 />
             </div>
 
-            <div class="p-2">
-                <button type="submit" class="btn btn-primary">
+            <div className="p-2">
+                <button type="submit" className="btn btn-primary">
                     Submit
                 </button>
             </div>
