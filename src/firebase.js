@@ -8,15 +8,13 @@ import {
 } from "firebase/firestore";
 
 const firebaseConfig = {
-    apiKey: process.env.REACT_APP_API_KEY,
-    authDomain: process.env.REACT_APP_AUTH_DOMAIN,
-    projectId: process.env.REACT_APP_PROJECT_ID,
-    storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
-    messagingSenderId: process.env.REACT_APP_MESSAGEING_SENDER_ID,
-    appId: process.env.REACT_APP_APP_ID,
+    apiKey: "AIzaSyCaMNdhE6aiFh36H-HoonoTt55MyUsFSFc",
+    authDomain: "eurovision-422911.firebaseapp.com",
+    projectId: "eurovision-422911",
+    storageBucket: "eurovision-422911.appspot.com",
+    messagingSenderId: "262393389991",
+    appId: "1:262393389991:web:7dabe7d9b1a73c2982cc82",
 };
-
-console.log(firebaseConfig);
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
