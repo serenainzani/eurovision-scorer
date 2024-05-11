@@ -1,5 +1,13 @@
 import { db } from "./firebase";
-import { addDoc, collection } from "firebase/firestore";
+import {
+    addDoc,
+    collection,
+    query,
+    where,
+    getDocs,
+    doc,
+    updateDoc,
+} from "firebase/firestore";
 
 function SubmitScore() {
     async function handleSubmit(e) {
@@ -16,14 +24,53 @@ function SubmitScore() {
         };
 
         if (country !== "no-country") {
-            try {
-                const docRef = await addDoc(collection(db, "scores"), data);
-                console.log("Document written with ID: ", docRef.id);
-            } catch (e) {
-                console.error("Error adding document: ", e);
+            const docId = await scoreExist(user, country);
+            if (!docId) {
+                console.log("SCORE notttttt EXISTS");
+
+                try {
+                    const scoresRef = await addDoc(
+                        collection(db, "scores"),
+                        data
+                    );
+                    console.log("Document written with ID: ", scoresRef.id);
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
+            } else {
+                console.log("SCORE EXISTS");
+                await updateDoc(doc(db, "scores", docId), {
+                    score: score,
+                });
             }
         }
     }
+
+    async function scoreExist(user, country) {
+        const queryScore = query(
+            collection(db, "scores"),
+            where("user", "==", user),
+            where("country", "==", country)
+        );
+        try {
+            const querySnapshot = await getDocs(queryScore);
+            if (querySnapshot.empty) {
+                console.log("no scores yet");
+                return false;
+            } else {
+                console.log("scores exiist!");
+                let docId;
+                querySnapshot.forEach((doc) => {
+                    docId = doc.id;
+                    console.log(doc.id, " => ", doc.data());
+                });
+                return docId;
+            }
+        } catch (error) {
+            console.error("Error querying scores: ", error);
+        }
+    }
+
     return (
         <form
             method="post"
