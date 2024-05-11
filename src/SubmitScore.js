@@ -1,5 +1,5 @@
 import { db } from "./firebase";
-import { addDoc, collection, doc } from "firebase/firestore";
+import { addDoc, collection } from "firebase/firestore";
 
 function SubmitScore() {
     async function handleSubmit(e) {
@@ -7,10 +7,12 @@ function SubmitScore() {
         const country = e.target.country.value;
         const score = e.target.score.value;
         const user = "Lynnie";
+        const timestamp = Date.now();
         const data = {
             user: user,
             country: country,
             score: score,
+            timestamp: timestamp,
         };
 
         if (country !== "no-country") {

@@ -1,20 +1,23 @@
 import ScorePanel from "./ScorePanel";
 import { db } from "./firebase";
 import { useEffect, useState } from "react";
-import { getDocs, collection, onSnapshot } from "firebase/firestore";
+import { collection, onSnapshot, orderBy, query } from "firebase/firestore";
 
 function ScoreDisplay() {
     const [allScores, setAllScores] = useState([]);
 
     useEffect(() => {
         // async function getScores() {
-        const scoresRef = collection(db, "scores");
+        const scoresRef = query(
+            collection(db, "scores"),
+            orderBy("timestamp", "desc")
+        );
         // const snapshot = await getDocs(scoresRef);
 
         const observer = onSnapshot(scoresRef, (snapshot) => {
             let scoresData = [];
-            const allDocs = snapshot.forEach((document) => {
-                scoresData.unshift({ id: document.id, ...document.data() });
+            snapshot.forEach((document) => {
+                scoresData.push({ id: document.id, ...document.data() });
             });
             setAllScores(scoresData);
             console.log("getScores", scoresData);
