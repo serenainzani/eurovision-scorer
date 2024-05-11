@@ -1,13 +1,21 @@
 import "./App.css";
 import SubmitScore from "./SubmitScore";
 import ScoreDisplay from "./ScoreDisplay";
+import Login from "./Login";
+import { useState } from "react";
 
 function App() {
     return (
         <div className="App">
-            <h1>Shinzani Eurovision</h1>
-            <SubmitScore />
-            <ScoreDisplay />
+            {!localStorage.getItem("user") ? (
+                <Login />
+            ) : (
+                <>
+                    <h1>Shinzani Eurovision</h1>
+                    <SubmitScore />
+                    <ScoreDisplay />
+                </>
+            )}
         </div>
     );
 }

@@ -6,7 +6,7 @@ function SubmitScore() {
         e.preventDefault();
         const country = e.target.country.value;
         const score = e.target.score.value;
-        const user = "Lynnie";
+        const user = localStorage.getItem("user");
         const timestamp = Date.now();
         const data = {
             user: user,
