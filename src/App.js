@@ -2,7 +2,6 @@ import "./App.css";
 import SubmitScore from "./SubmitScore";
 import ScoreDisplay from "./ScoreDisplay";
 import Login from "./Login";
-import { useState } from "react";
 
 function App() {
     return (
